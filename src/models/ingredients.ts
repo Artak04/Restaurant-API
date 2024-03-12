@@ -9,6 +9,7 @@ const ingredients = new Schema({
 })
 
 
+
 const Ingredients = mongoose.model("product", ingredients)
 
 
