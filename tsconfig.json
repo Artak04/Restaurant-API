@@ -1,20 +1,18 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "module": "NodeNext",
-        "experimentalDecorators": true,
-        "moduleResolution": "NodeNext",
-        "baseUrl": "src",
-        "outDir": "dist",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "esModuleInterop": true,
-    },
-    "include": [
-        "src/**/*.ts"
-    ],
-    "ts-node": {
-        "esm": true,
-        "experimentalSpecifierResolution": "node",
-    }
+  "compilerOptions": {
+      "target": "ESNext",
+      "module": "CommonJS",
+      "experimentalDecorators": true,
+      "moduleResolution": "Node",
+      "baseUrl": "src",
+      "outDir": "dist",
+      "sourceMap": true,
+      "emitDecoratorMetadata": true,
+      "esModuleInterop": true,
+  },
+  "include": [
+      "src/**/*.ts"
+  ],
+
+
 }
