@@ -2,14 +2,16 @@ import express, { Express } from "express"
 import "dotenv/config"
 import mongoose from "mongoose"
 import productRoutes from "./routes/products"
+import config from "./config/config"
+import ingredientRoutes from "../src/routes/ingredients"
 
 const app: Express = express()
 
-const port: number = +process.env.port || 3005
-const mongoUrl: string = process.env.mongoConnectUrl
+const port: number = config.port
+const mongoUrl: string = config.mongoUrl
 
 app.use(express.json())
-app.use(productRoutes)
+app.use(productRoutes, ingredientRoutes)
 
 app.listen(port, (): void => { console.log(`Server is open on ${port} port`) })
 

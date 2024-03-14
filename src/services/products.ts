@@ -19,6 +19,7 @@ interface IupdateProduct {
 
 
 
+
 export const createProducts = async function (data: Iproduct) {
     const { name, category, ingredients, price } = data
 
@@ -69,8 +70,10 @@ export const updateProduct = async function (id: string, data: IupdateProduct) {
     if (data.price !== undefined) {
         await Product.findOneAndUpdate({ _id: id }, { $set: { price: data.price } })
     }
-
-    await Product.findOneAndUpdate({ _id: id }, { $set: { ingredients: data.ingredients } })
+    if(data.ingredients.length !== 0){
+        await Product.findOneAndUpdate({ _id: id }, { $set: { ingredients: data.ingredients } })
+    }
+    
 
     const product = await Product.findById({ _id: id })
     return { status: 200, messages: { product } }

@@ -11,10 +11,10 @@ const schemaAdd = joi.object({
 
 
 const schemaUpdate =joi.object( {
-    name: joi.string(),
-    category: joi.string(),
-    ingredients: joi.array(),
-    price: joi.number()
+    name: joi.string().optional().allow(''),
+    category: joi.string().optional().allow(''),
+    ingredients: joi.array().optional().items(joi.string()),
+    price: joi.number().optional()
 })
 
 export const validationProduct = async function (req: Request, res: Response, next: NextFunction) {
@@ -35,3 +35,5 @@ export const validationUpdateProduct = async function (req:Request,res:Response,
         return res.status(400).send({ message: `Invalid name, category,ingredients or price ${error}`  })
     }
 }
+
+
