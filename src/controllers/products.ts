@@ -14,7 +14,6 @@ export const addProducts = async function (req: Request, res: Response) {
 export const getProducts = async function (req: Request, res: Response) {
     try {
         const products = await allPoducts(req.query.category as string)
-        console.log(req.query.category)
         res.status(products.status).send(products.messages)
     } catch (error) {
         res.send(error)

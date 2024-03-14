@@ -1,5 +1,5 @@
 import Product from "../models/products"
-import ParamsDictionary from "express"
+
 
 interface Iproduct {
     name: string,

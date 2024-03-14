@@ -1,6 +1,5 @@
-import mongoose,{Types} from "mongoose";
 import Ingredients from "../models/ingredients";
-import { ObjectId } from "mongoose"
+
 
 
 interface Iingredients {
@@ -68,7 +67,7 @@ export const updateIngredient = async function (id: string, data: IupdateIngredi
         if (data.group.length <= 2) {
             return { status: 400, messages: { message: "at least 3 word group" } }
         }
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { category: data.group } })
+        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { group: data.group } })
     }
     if (data.price !== undefined) {
         await Ingredients.findOneAndUpdate({ _id: id }, { $set: { price: data.price } })
@@ -77,7 +76,7 @@ export const updateIngredient = async function (id: string, data: IupdateIngredi
         await Ingredients.findOneAndUpdate({ _id: id }, { $set: { unit: data.unit } })
     }
     if (data.critical !== undefined) {
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { price: data.critical } })
+        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { critical: data.critical } })
     }
 
     const ingredient = await Ingredients.findById({ _id: id })
