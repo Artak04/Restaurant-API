@@ -31,11 +31,23 @@ export const validationIngredients = async function (req: Request, res: Response
 export const validationUpdateIngredient = async function (req: Request, res: Response, next: NextFunction) {
     try {
         await schemaUpdate.validateAsync(req.body)
+        if (req.body.name) {
+            if (req.body.name.length <= 5) {
+                return res.status(400).send({ messages: "at least 6 word name" })
+            }
+        }
+        if (req.body.group) {
+            if (req.body.group.length <= 2) {
+                return res.status(400).send({ messages: "at least 3 word group" })
+            }
+        }
         next()
     } catch (error) {
         return res.status(400).send({ message: `Invalid name, group,unit,  price or critical ${error}` })
     }
 }
+
+
 
 
 

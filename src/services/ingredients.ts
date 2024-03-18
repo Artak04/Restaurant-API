@@ -27,7 +27,7 @@ interface IfunctionsReturns {
 }
 
 
-export const createIngredients = async function (data: Iingredients):Promise<IfunctionsReturns> {
+export const createIngredients = async function (data: Iingredients): Promise<IfunctionsReturns> {
     const { name, group, unit, price, critical } = data
 
     const newIngredients = new Ingredients()
@@ -44,41 +44,28 @@ export const createIngredients = async function (data: Iingredients):Promise<Ifu
 }
 
 
-export const allIngredients = async function ():Promise<IfunctionsReturns> {
+export const allIngredients = async function (): Promise<IfunctionsReturns> {
     const ingredients = await Ingredients.find()
-    return { status: 200, messages: {message: ingredients } }
+    return { status: 200, messages: { message: ingredients } }
 
 }
 
-export const getIngredientById = async function (id: string):Promise<IfunctionsReturns> {
+export const getIngredientById = async function (id: string): Promise<IfunctionsReturns> {
     const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages: {message: ingredient } }
+    return { status: 200, messages: { message: ingredient } }
 }
 
 
-export const updateIngredient = async function (id: string, data: IupdateIngredient):Promise<IfunctionsReturns> {
-    if (data.name !== "") {
-        if (data.name.length <= 5) {
-            return { status: 400, messages: { message: "at least 6 word name" } }
+
+export const updateIngredient = async function (id: string, data: IupdateIngredient): Promise<IfunctionsReturns> {
+    const updateData: { name?: string, group?: string, unit?: string, price?: number, critical?: number } = {}
+    for (const key in data) {
+        if (data[key]) {
+            updateData[key] = data[key]
         }
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { name: data.name } })
     }
-    if (data.group !== "") {
-        if (data.group.length <= 2) {
-            return { status: 400, messages: { message: "at least 3 word group" } }
-        }
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { group: data.group } })
-    }
-    if (data.price !== undefined) {
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { price: data.price } })
-    }
-    if (data.unit !== "") {
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { unit: data.unit } })
-    }
-    if (data.critical !== undefined) {
-        await Ingredients.findOneAndUpdate({ _id: id }, { $set: { critical: data.critical } })
-    }
+    await Ingredients.findOneAndUpdate({ _id: id }, { $set: updateData })
 
     const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages: { message:ingredient } }
+    return { status: 200, messages: { message: ingredient } }
 }

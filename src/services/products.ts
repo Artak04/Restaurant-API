@@ -18,9 +18,18 @@ interface IupdateProduct {
 
 
 
+interface IfunctionsReturns {
+    status: number,
+    messages: {
+        message: {}
+    }
+}
 
 
-export const createProducts = async function (data: Iproduct) {
+
+
+
+export const createProducts = async function (data: Iproduct): Promise<IfunctionsReturns> {
     const { name, category, ingredients, price } = data
 
     const newProduct = new Product()
@@ -35,46 +44,38 @@ export const createProducts = async function (data: Iproduct) {
 }
 
 
-export const allPoducts = async function (data: string) {
+export const allPoducts = async function (data: string): Promise<IfunctionsReturns> {
 
     if (data) {
         const products = await Product.find({ category: data })
-        return { status: 200, messages: { products } }
+        return { status: 200, messages: { message: products } }
     }
 
     const products = await Product.find()
-    return { status: 200, messages: { products } }
+    return { status: 200, messages: { message: products } }
 
 }
 
 
-export const getProductById = async function (data: string) {
+export const getProductById = async function (data: string): Promise<IfunctionsReturns> {
     const product = await Product.findById({ _id: data })
-    return { status: 200, messages: { product } }
+    return { status: 200, messages: { message: product } }
 }
 
 
-export const updateProduct = async function (id: string, data: IupdateProduct) {
-    if (data.name !== "") {
-        if (data.name.length <= 5) {
-            return { status: 400, messages: { message: "at least 6 word name" } }
+export const updateProduct = async function (id: string, data: IupdateProduct): Promise<IfunctionsReturns> {
+    const updateData: { name?: string, category?: string, ingredients?: [], price?: number } = {}
+    for (const key in data) {
+        if (data[key]) {
+            updateData[key] = data[key]
         }
-        await Product.findOneAndUpdate({ _id: id }, { $set: { name: data.name } })
     }
-    if (data.category !== "") {
-        if (data.category.length <= 2) {
-            return { status: 400, messages: { message: "at least 3 word category" } }
-        }
-        await Product.findOneAndUpdate({ _id: id }, { $set: { category: data.category } })
+    if (updateData.ingredients.length === 0) {
+        delete updateData.ingredients
     }
-    if (data.price !== undefined) {
-        await Product.findOneAndUpdate({ _id: id }, { $set: { price: data.price } })
-    }
-    if(data.ingredients.length !== 0){
-        await Product.findOneAndUpdate({ _id: id }, { $set: { ingredients: data.ingredients } })
-    }
-    
 
+    await Product.findOneAndUpdate({ _id: id }, { $set: updateData })
+    
     const product = await Product.findById({ _id: id })
-    return { status: 200, messages: { product } }
+    return { status: 200, messages: { message: product } }
 }
