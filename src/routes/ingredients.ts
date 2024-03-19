@@ -4,7 +4,25 @@ import { validationIngredients, validationUpdateIngredient } from "../middleware
 
 const route: Router = express.Router()
 
-
+/**
+ * @swagger
+ * tags:
+ *   name: Ingredients
+ *   description: The ingredients managing API
+ * /ingredients:
+ *   get:
+ *     summary: Lists all the ingredients
+ *     tags: [Ingredients]
+ *     responses:
+ *       200:
+ *         description: The list of the ingredients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Ingredient'
+ */
 
 route.get('/ingredients', getIngredients)
 route.post('/ingredients', validationIngredients, addIngredients)

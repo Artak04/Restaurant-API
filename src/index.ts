@@ -13,7 +13,7 @@ const port: number = config.port
 const mongoUrl: string = config.mongoUrl
 
 app.use(express.json())
-app.use(swaggerUI.serve, swaggerUI.setup(specs))
+app.use("/api-docs",swaggerUI.serve, swaggerUI.setup(specs))
 app.use(productRoutes, ingredientRoutes)
 
 app.listen(port, (): void => { console.log(`Server is open on ${port} port`) })
