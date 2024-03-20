@@ -22,6 +22,73 @@ const route: Router = express.Router()
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Ingredient'
+ * 
+ * 
+ *   post:
+ *     summary: Create a new ingredient
+ *     tags: [Ingredients]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/createIngredient'
+ *     responses:
+ *       200:
+ *         description: The created ingredient.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/createIngredient'
+ *       400:
+ *         description: Invalid name, group,unit, price or critical
+ * 
+ * /ingredients/{id}:
+ *   get:
+ *     summary: Get the ingredient by id
+ *     tags: [Ingredients]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ingrdient id
+ *     responses:
+ *       200:
+ *         description: The ingredient response by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Ingredient'
+ *       404:
+ *         description: The ingredient was not found
+ * 
+ *   put:
+ *    summary: Update the ingredient by the id
+ *    tags: [Ingredients]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The ingredient id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/createIngredient'
+ *    responses:
+ *      200:
+ *        description: The ingredient  updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Ingredient'
+ *      400:
+ *        description: Invalid name, group,unit,  price or critical
  */
 
 route.get('/ingredients', getIngredients)

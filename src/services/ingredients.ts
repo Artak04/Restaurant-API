@@ -21,9 +21,8 @@ interface IupdateIngredient {
 
 interface IfunctionsReturns {
     status: number,
-    messages: {
-        message: {}
-    }
+    messages: {}
+    
 }
 
 
@@ -39,20 +38,20 @@ export const createIngredients = async function (data: Iingredients): Promise<If
 
         newIngredients.save()
 
-    return { status: 200, messages: { message: newIngredients } }
+    return { status: 200, messages: newIngredients  }
 
 }
 
 
 export const allIngredients = async function (): Promise<IfunctionsReturns> {
     const ingredients = await Ingredients.find()
-    return { status: 200, messages: { message: ingredients } }
+    return { status: 200, messages: ingredients  }
 
 }
 
 export const getIngredientById = async function (id: string): Promise<IfunctionsReturns> {
     const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages: { message: ingredient } }
+    return { status: 200, messages:  ingredient  }
 }
 
 
@@ -67,5 +66,5 @@ export const updateIngredient = async function (id: string, data: IupdateIngredi
     await Ingredients.findOneAndUpdate({ _id: id }, { $set: updateData })
 
     const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages: { message: ingredient } }
+    return { status: 200, messages:  ingredient  }
 }
