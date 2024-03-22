@@ -20,9 +20,8 @@ interface IupdateProduct {
 
 interface IfunctionsReturns {
     status: number,
-    messages: {
-        message: {}
-    }
+    messages: {}
+
 }
 
 
@@ -39,7 +38,7 @@ export const createProducts = async function (data: Iproduct): Promise<Ifunction
     newProduct.price = price
 
     newProduct.save()
-    return { status: 200, messages: { message: newProduct } }
+    return { status: 200, messages: newProduct }
 
 }
 
@@ -48,18 +47,18 @@ export const allPoducts = async function (data: string): Promise<IfunctionsRetur
 
     if (data) {
         const products = await Product.find({ category: data })
-        return { status: 200, messages: { message: products } }
+        return { status: 200, messages: products }
     }
 
     const products = await Product.find()
-    return { status: 200, messages: { message: products } }
+    return { status: 200, messages: products }
 
 }
 
 
 export const getProductById = async function (data: string): Promise<IfunctionsReturns> {
     const product = await Product.findById({ _id: data })
-    return { status: 200, messages: { message: product } }
+    return { status: 200, messages: product }
 }
 
 
@@ -75,7 +74,7 @@ export const updateProduct = async function (id: string, data: IupdateProduct): 
     }
 
     await Product.findOneAndUpdate({ _id: id }, { $set: updateData })
-    
+
     const product = await Product.findById({ _id: id })
-    return { status: 200, messages: { message: product } }
+    return { status: 200, messages: product }
 }

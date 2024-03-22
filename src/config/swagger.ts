@@ -83,6 +83,65 @@ const options = {
                         price: 1000,
                         critical: 6
                     }
+                },
+                product: {
+                    type: "array",
+                    properties: {
+                        _id: {
+                            type: 'string',
+                            description: "The auto-generated id of the product"
+                        },
+                        name: {
+                            type: "string",
+                            description: "The name of the product"
+                        },
+                        category: {
+                            type: "string",
+                            description: "The category of the product"
+                        },
+                        ingredients: {
+                            type: "array",
+                            description: "The ingredients of the product"
+                        },
+                        price: {
+                            type: "number",
+                            description: "The price of the product"
+                        }
+                    },
+                    example: {
+                        _id: "65f2d166ee7eec1d4ab3ff4qwq",
+                        name: "cesar",
+                        category: "salat",
+                        ingredients: ['suxarik', "chicken meat"],
+                        price: 3000
+                    }
+                },
+                createProduct: {
+                    type: "array",
+                    properties: {
+                        name: {
+                            type: "string",
+                            description: "The name of the product"
+                        },
+                        category: {
+                            type: "string",
+                            description: "The category of the product"
+                        },
+                        ingredients: {
+                            type: "array",
+                            description: "The ingredients of the product"
+                        },
+                        price: {
+                            type: "number",
+                            description: "The price of the product"
+                        }
+                    },
+                    example: {
+                        name: "cesar",
+                        category: "salat",
+                        ingredients: ['suxarik', "chicken meat"],
+                        price: 3000
+                    }
                 }
 
             }

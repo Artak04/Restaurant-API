@@ -32,8 +32,8 @@ export const validationUpdateIngredient = async function (req: Request, res: Res
     try {
         await schemaUpdate.validateAsync(req.body)
         if (req.body.name) {
-            if (req.body.name.length <= 5) {
-                return res.status(400).send({ error: "at least 6 word name" })
+            if (req.body.name.length <= 4) {
+                return res.status(400).send({ error: "at least 4 word name" })
             }
         }
         if (req.body.group) {
