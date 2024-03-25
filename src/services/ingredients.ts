@@ -22,7 +22,7 @@ interface IupdateIngredient {
 interface IfunctionsReturns {
     status: number,
     messages: {}
-    
+
 }
 
 
@@ -38,20 +38,24 @@ export const createIngredients = async function (data: Iingredients): Promise<If
 
         newIngredients.save()
 
-    return { status: 200, messages: newIngredients  }
+    return { status: 200, messages: newIngredients }
 
 }
 
 
 export const allIngredients = async function (): Promise<IfunctionsReturns> {
     const ingredients = await Ingredients.find()
-    return { status: 200, messages: ingredients  }
+    return { status: 200, messages: ingredients }
 
 }
 
 export const getIngredientById = async function (id: string): Promise<IfunctionsReturns> {
-    const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages:  ingredient  }
+    try {
+        const ingredient = await Ingredients.findById({ _id: id })
+        return { status: 200, messages: ingredient }
+    } catch (error) {
+        return { status: 400, messages: "incorrect id" }
+    }
 }
 
 
@@ -63,8 +67,13 @@ export const updateIngredient = async function (id: string, data: IupdateIngredi
             updateData[key] = data[key]
         }
     }
-    await Ingredients.findOneAndUpdate({ _id: id }, { $set: updateData })
 
-    const ingredient = await Ingredients.findById({ _id: id })
-    return { status: 200, messages:  ingredient  }
+    try {
+        await Ingredients.findOneAndUpdate({ _id: id }, { $set: updateData })
+
+        const ingredient = await Ingredients.findById({ _id: id })
+        return { status: 200, messages: ingredient }
+    } catch (error) {
+        return { status: 400, messages: "incorrect id" }
+    }
 }

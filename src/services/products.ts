@@ -43,23 +43,28 @@ export const createProducts = async function (data: Iproduct): Promise<Ifunction
 }
 
 
-export const allPoducts = async function (data: string)  {
-   
+export const allPoducts = async function (data: string):Promise<IfunctionsReturns> {
+
 
     if (data) {
-        const products = await Product.find({ category: data }).populate('ingredients','name group -_id').exec()
+        const products = await Product.find({ category: data }).populate('ingredients', 'name group -_id').exec()
         return { status: 200, messages: products }
     }
-    
-    const products = await Product.find().populate('ingredients','name group -_id').exec()
+
+    const products = await Product.find().populate('ingredients', 'name group -_id').exec()
     return { status: 200, messages: products }
 
 }
 
 
 export const getProductById = async function (data: string): Promise<IfunctionsReturns> {
-    const product = await Product.findById({ _id: data }).populate('ingredients','name group -_id').exec()
-    return { status: 200, messages: product }
+    try {
+        const product = await Product.findById({ _id: data }).populate('ingredients', 'name group -_id').exec()
+        return { status: 200, messages: product }
+    } catch (error) {
+        return { status: 400, messages: "incorrect id" }
+    }
+
 }
 
 
@@ -73,9 +78,13 @@ export const updateProduct = async function (id: string, data: IupdateProduct): 
     if (updateData.ingredients.length === 0) {
         delete updateData.ingredients
     }
-    
-    await Product.findOneAndUpdate({ _id: id }, { $set: updateData })
 
-    const product = await Product.findById({ _id: id }).populate('ingredients','name group -_id').exec()
-    return { status: 200, messages: product }
+    try {
+        await Product.findOneAndUpdate({ _id: id }, { $set: updateData })
+
+        const product = await Product.findById({ _id: id }).populate('ingredients', 'name group -_id').exec()
+        return { status: 200, messages: product }
+    } catch (error) {
+       return  { status: 400, messages: "incorrect product id or ingredient id" }
+    }
 }
