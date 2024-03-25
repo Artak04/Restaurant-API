@@ -49,7 +49,8 @@ const options = {
                         group: "vegetables",
                         unit: "kg",
                         price: 1000,
-                        critical: 6
+                        critical: 6,
+                        __v: 0
                     }
                 },
                 createIngredient: {
@@ -112,8 +113,12 @@ const options = {
                         _id: "65f2d166ee7eec1d4ab3ff4qwq",
                         name: "cesar",
                         category: "salat",
-                        ingredients: ['suxarik', "chicken meat"],
-                        price: 3000
+                        ingredients: [{
+                            name: "cheese",
+                            group: "dairy"
+                        }],
+                        price: 3000,
+                        __v: 0
                     }
                 },
                 createProduct: {
@@ -139,8 +144,8 @@ const options = {
                     example: {
                         name: "cesar",
                         category: "salat",
-                        ingredients: ['suxarik', "chicken meat"],
-                        price: 3000
+                        ingredients: ['65f2d166ee7eec1d4ab3ff4qwq'],
+                        price: 3000,
                     }
                 }
 

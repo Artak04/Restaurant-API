@@ -3,12 +3,12 @@ import mongoose, { Schema } from "mongoose";
 const product = new Schema({
     name: { type: String },
     category: { type: String },
-    ingredients: { type: Array },
+    ingredients: [{ type: Schema.Types.ObjectId, ref: "Ingredients" }],
     price: { type: Number }
 })
 
 
-const Product = mongoose.model("product", product)
+const Product = mongoose.model("Product", product)
 
 
 export default Product 

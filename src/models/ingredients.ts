@@ -10,7 +10,7 @@ const ingredients = new Schema({
 
 
 
-const Ingredients = mongoose.model("ingredients", ingredients)
+const Ingredients = mongoose.model("Ingredients", ingredients)
 
 
 export default Ingredients
