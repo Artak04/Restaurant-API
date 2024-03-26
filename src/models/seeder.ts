@@ -1,5 +1,5 @@
-import Ingredients from "../src/models/ingredients";
-import Product from "../src/models/products";
+import Ingredients from "./ingredients";
+import Product from "./products";
 
 const initialIngredients = [
     {

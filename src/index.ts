@@ -6,7 +6,7 @@ import config from "./config/config"
 import ingredientRoutes from "../src/routes/ingredients"
 import swaggerUI from "swagger-ui-express"
 import { specs } from "./config/swagger"
-import { seed } from "./seeder"
+import { seed } from "./models/seeder"
 
 const app: Express = express()
 
