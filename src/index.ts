@@ -16,7 +16,7 @@ app.use(express.json())
 app.use("/api-docs",swaggerUI.serve, swaggerUI.setup(specs))
 app.use(productRoutes, ingredientRoutes)
 
-app.listen(port, (): void => { console.log(`Server is open on ${port} port`) })
+app.listen(port, (): void => { console.log("Server is open on http://localhost:3005/api-docs ") })
 
 mongoose.connect(mongoUrl).then(() => console.log('Database connected'))
     .catch(err => console.error('Error connecting to database:', err));
