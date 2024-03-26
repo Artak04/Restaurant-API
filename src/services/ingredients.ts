@@ -28,6 +28,11 @@ interface IfunctionsReturns {
 
 export const createIngredients = async function (data: Iingredients): Promise<IfunctionsReturns> {
     const { name, group, unit, price, critical } = data
+    const checkIngredient = await Ingredients.findOne({ name })
+
+    if (checkIngredient) {
+        return { status: 400, messages: "The name is already exists" }
+    }
 
     const newIngredients = new Ingredients()
     newIngredients.name = name,

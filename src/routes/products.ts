@@ -1,6 +1,7 @@
 import express, { Router } from "express"
 import { validationProduct, validationUpdateProduct } from "../middlewares/validations/validationProduct"
 import { addProducts, getProducts, getProduct, productUpdate } from "../controllers/products"
+import { accessToken } from "../middlewares/tokenAccess"
 
 const route: Router = express.Router()
 
@@ -15,6 +16,12 @@ const route: Router = express.Router()
  *     summary: Lists all the products
  *     tags: [products]
  *     parameters:
+ *      - in: header
+ *        name: token
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Token  
  *      - in: query
  *        name: category
  *        description: This is the category
@@ -31,10 +38,19 @@ const route: Router = express.Router()
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/product'
+ *       403:
+ *         description: Access forbidden. Admin privileges required 
  * 
  *   post:
  *     summary: Create a new product
  *     tags: [products]
+ *     parameters:
+ *      - in: header
+ *        name: token
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Token   
  *     requestBody:
  *       required: true
  *       content:
@@ -50,12 +66,20 @@ const route: Router = express.Router()
  *               $ref: '#/components/schemas/product'
  *       400:
  *         description: Invalid name, category, ingredients or price 
+ *       403:
+ *         description: Access forbidden. Admin privileges required 
  * 
  * /products/{id}:
  *   get:
  *     summary: Get the product by id
  *     tags: [products]
  *     parameters:
+ *       - in: header
+ *         name: token
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Token    
  *       - in: path
  *         name: id
  *         schema:
@@ -71,11 +95,19 @@ const route: Router = express.Router()
  *               $ref: '#/components/schemas/product'
  *       404:
  *         description: The product was not found
+ *       403:
+ *         description: Access forbidden. Admin privileges required 
  *  
  *   put:
  *    summary: Update the product by the id
  *    tags: [products]
  *    parameters:
+ *      - in: header
+ *        name: token
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Token  
  *      - in: path
  *        name: id
  *        schema:
@@ -96,14 +128,16 @@ const route: Router = express.Router()
  *            schema:
  *              $ref: '#/components/schemas/product'
  *      400:
- *        description: Invalid name, category,ingredients or price  
+ *        description: Invalid name, category,ingredients or price 
+ *      403:
+ *        description: Access forbidden. Admin privileges required  
  *  
  */
 
-route.get('/products', getProducts)
-route.post('/products', validationProduct, addProducts)
-route.get('/products/:id', getProduct)
-route.put('/products/:id', validationUpdateProduct, productUpdate)
+route.get('/products',accessToken, getProducts)
+route.post('/products',accessToken, validationProduct, addProducts)
+route.get('/products/:id',accessToken, getProduct)
+route.put('/products/:id',accessToken, validationUpdateProduct, productUpdate)
 
 
 export default route

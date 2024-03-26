@@ -85,6 +85,7 @@ export const updateProduct = async function (id: string, data: IupdateProduct): 
         const product = await Product.findById({ _id: id }).populate('ingredients', 'name group -_id').exec()
         return { status: 200, messages: product }
     } catch (error) {
-       return  { status: 400, messages: "incorrect product id or ingredient id" }
+        return  { status: 400, messages: error.reason?.path === "ingredients" ? "ingredients id incorrect" : "product id incorrect" }
     }
+    
 }
